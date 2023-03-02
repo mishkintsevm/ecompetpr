@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
         wb = load_workbook(DATA_DIR+'/price.xlsx')
         sheet = wb.get_sheet_by_name(wb.get_sheet_names()[0])
-        print(sheet.max_row)
+        cat_new = None
         for count in range(1, sheet.max_row):
             item = sheet.cell(row=count, column=1).value
             id = sheet.cell(row=count, column=9).value
@@ -27,5 +27,9 @@ class Command(BaseCommand):
                 cat_new = Category()
                 cat_new.name = item
                 cat_new.save()
-            else:
                 print('Create a new good')
+                if cat_new:
+                    prod_item = Product()
+                    prod_item.name = item
+                    prod_item.category = cat_new
+                    prod_item.save()
