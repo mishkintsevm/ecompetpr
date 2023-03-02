@@ -31,7 +31,7 @@ class Consumer(User):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=250, default='')
+    name = models.CharField(max_length=250, default='', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -44,7 +44,9 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=250, default='')
     image = models.ImageField(upload_to='product', null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+    category = models.ForeignKey(
+        Category, on_delete=models.SET_NULL, null=True, blank=True
+        )
 
     def __str__(self):
         return '%s (%s)' % (self.name, self.category)
@@ -55,8 +57,12 @@ class Product(models.Model):
 
 
 class Store(models.Model):
-    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=True, blank=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
+    provider = models.ForeignKey(
+        Provider, on_delete=models.CASCADE, null=True, blank=True
+        )
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, null=True, blank=True
+        )
     price = models.DecimalField(max_digits=8, decimal_places=2)
 
     class Meta:
@@ -83,8 +89,12 @@ class Order(models.Model):
 
 
 class OrderProduct(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True)
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, null=True, blank=True
+        )
+    order = models.ForeignKey(
+        Order, on_delete=models.CASCADE, null=True, blank=True
+        )
     count = models.IntegerField(default=0)
 
     class Meta:
