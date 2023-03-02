@@ -2,6 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import serializers
 
+from rest_framework.decorators import api_view
+
 from drf_yasg.utils import swagger_auto_schema
 
 
@@ -27,9 +29,6 @@ class AuthView(APIView):
             'status': 0,
             'message': 'Good',
         }).data)
-
-
-from rest_framework.decorators import api_view
 
 
 @api_view()
